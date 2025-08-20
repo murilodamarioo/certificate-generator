@@ -61,3 +61,7 @@
   text-align: center;
   color: #64748B;
 }
+
+.list-certificates {
+  max-width: 672px;
+}
