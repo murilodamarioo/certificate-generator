@@ -1,12 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Navbar } from "./_components/navbar/navbar";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class App {
-  protected readonly title = signal('certificate-generator');
+  title = signal('certificate-generator');
+  showNavBar: boolean = false
 }
