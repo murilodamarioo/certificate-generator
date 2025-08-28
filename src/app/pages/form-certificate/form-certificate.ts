@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { SecondaryButton } from "../../_components/secondary-button/secondary-button";
 import { PrimaryButton } from "../../_components/primary-button/primary-button";
 import { Certificate } from '../../interfaces/certificate';
+import { CertificateService } from '../../_services/certificado.service';
 
 
 @Component({
@@ -14,11 +15,14 @@ import { Certificate } from '../../interfaces/certificate';
   styleUrl: './form-certificate.css'
 })
 export class FormCertificate {
+  constructor(private certificateService: CertificateService) { }
+
   activity: string = ''
 
   certificate: Certificate = {
     name: '',
-    activities: []
+    activities: [],
+    issueDate: ''
   }
 
   invalidField(control: NgModel) {
@@ -28,9 +32,21 @@ export class FormCertificate {
   validForm() {
     return this.certificate.activities.length > 0 && this.certificate.name.length > 0
   }
+
   addActivity() {
     this.certificate.activities.push(this.activity)
     this.activity = ''
+  }
+
+  currentDate() {
+    const currentDate = new Date()
+    const day = String(currentDate.getDate()).padStart(2, '0')
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+    const year = currentDate.getFullYear()
+
+    const formattedDate = `${day}/${month}/${year}`
+
+    return formattedDate
   }
 
   deleteActivity(index: number) {
@@ -41,7 +57,8 @@ export class FormCertificate {
     if (!this.validForm()) {
       return
     }
+    this.certificate.issueDate = this.currentDate()
 
-    console.log(this.certificate)
+    this.certificateService.AddCertificate(this.certificate)
   }
 }
