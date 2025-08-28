@@ -15,7 +15,7 @@ import { PrimaryButton } from "../../_components/primary-button/primary-button";
 export class FormCertificate {
   name: string = ''
   activity: string = ''
-  activities: string[] = ['Angular', 'React']
+  activities: string[] = []
 
   invalidField(control: NgModel) {
     return control.invalid && control.touched
@@ -23,5 +23,13 @@ export class FormCertificate {
 
   validForm() {
     return this.activities.length > 0 && this.name.length > 0
+  }
+  addActivity() {
+    this.activities.push(this.activity)
+    this.activity = ''
+  }
+
+  deleteActivity(index: number) {
+    this.activities.splice(index, 1)
   }
 }
